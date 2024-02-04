@@ -3,6 +3,7 @@
 #include<vector>
 #include<string>
 #include<iomanip>
+#include<iterator>
 
 using namespace std;
 
@@ -14,7 +15,7 @@ public:
 	int language;
 	string name;
 
-	Person(string name,int math,int physics,int language) {
+	Person(string name, int math, int physics, int language) {
 		this->name = name;
 		this->math = math;
 		this->physics = physics;
@@ -35,14 +36,14 @@ struct Subject {
 	string language;
 	string name_of_people;
 	string result_t;
-	Subject(string name_of_people,string math, string physics, string language, string result_t) : name_of_people(name_of_people),math(math), 
+	Subject(string name_of_people, string math, string physics, string language, string result_t) : name_of_people(name_of_people), math(math),
 		physics(physics), language(language), result_t(result_t) {
 
 	}
 
 	void print_information_subjects() {
-		cout << this->name_of_people << "\t\t" << this->math << "\t" 
-			<< this->physics << "\t\t" << this->language<<"\t"<<this->result_t;
+		cout << this->name_of_people << "\t\t" << this->math << "\t"
+			<< this->physics << "\t\t" << this->language << "\t" << this->result_t;
 		//cout << endl;
 	}
 };
@@ -52,15 +53,18 @@ int main() {
 	system("chcp 1251");
 
 	cout << "\nНомер \t";
-	
-	Subject subject("Имена", "Математика", "Физика", "Русский язык","Общий балл");
-	
+
+	Subject subject("Имена", "Математика", "Физика", "Русский язык", "Общий балл");
+
 	subject.print_information_subjects();
-	
+
 	cout << "\t Вид обучении\n";
-	
-	cout<<"\n";
-	
+	vector<int> str(102, '-');
+
+	copy(str.begin(), str.end(), ostream_iterator<char>(cout, ""));
+
+	cout << "\n";
+
 	vector<Person> ans{ {Person("Сергей", 98, 70, 45)},
 						{Person("Алексей", 99, 45, 55)},
 						{Person("Дмитрий", 45, 99, 10)},
@@ -70,41 +74,45 @@ int main() {
 						{Person("Михаил", 70, 75, 76)},
 						{Person("Никита", 80, 65, 96)},
 						{Person("Абрам", 60, 50, 40)},
-						{Person("Руслан", 65, 45, 78)}};
+						{Person("Андрей", 100, 100, 100)},
+						{Person("Руслан", 65, 45, 78)}
+	};
 
 
-	sort(ans.begin(), ans.end(), [&](Person lok,Person pok) {
-	
-		return result(lok)>result(pok);
-		
+	sort(ans.begin(), ans.end(), [&](Person lok, Person pok) {
+
+		return result(lok) > result(pok);
+
 		});
-	
+
 	vector<string> passed;
-	
+
 	vector<string> names;
-	
+
 	int i = 1;
-	
+
 	for (auto n : ans) {
-		
+
 		if (result(n) >= 180) {
-		
+
 			passed.push_back("Бюджет");
-		
+
 		}
-		
+
 		else {
-			
+
 			passed.push_back("Договор");
-		
+
 		}
-		
-		cout<< i <<")\t" << n.name << "\t\t" << n.math << "\t\t" << n.physics << "\t\t" << n.language << "\t\t" << result(n)<<"\t\t "<<passed[i-1]<<"\n";
-		
+
+		cout << i << ")\t" << n.name << "\t\t" << n.math << "\t\t" << n.physics << "\t\t" << n.language << "\t\t" << result(n) << "\t\t " << passed[i - 1] << "\n";
+
+		copy(str.begin(), str.end(), ostream_iterator<char>(cout, ""));
+
 		names.push_back(n.name);
-		
+
 		cout << endl;
-		
+
 		++i;
 		//Номер   Имена           Математика      Физика          Русский язык    Общий балл       Вид обучении
 
